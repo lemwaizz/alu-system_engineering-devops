@@ -4,4 +4,4 @@ Host 5987-web-01
 	Hostname 34.228.64.151
 	User ubuntu
 	PasswordAuthentication no
-	IdentityFile ~/.ssh/school
+	IdentityFile ~/.ssh/school.pub

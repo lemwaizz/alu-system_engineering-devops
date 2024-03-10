@@ -1,14 +1,31 @@
-sh script to install nginx web server & make the following configurations:
-
-apt-get update
-apt-get install -y nginx
-
-mkdir /etc/nginx/html
-
-touch /etc/nginx/html/index.html
+#!/usr/bin/env bash
+# Configures a new ubuntu machine by installing
+# Nginx where it should be listening on port 80
+# Serve a page that would return a Hello World string
+#
 
 
-echo "Holberton School" > /etc/nginx/html/index.html
+echo -e "Updating and installing Nginx.\n"
+sudo apt-get update -y -qq && \
+         sudo apt-get install nginx -y
+
+echo -e "\nSetting up some minor stuff.\n"
+
+# starting nginx service
+sudo service nginx start
+
+# allowing nginx on firewall
+sudo ufw allow 'Nginx HTTP'
+
+# Give the user ownership to website files for easy editing
+sudo chown -R "$USER":"$USER" /var/www/html
+sudo chmod -R 755 /var/www
+
+# Backup default index
+cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
+
+# Creating new index
+echo -e "Holberton School!" > /var/www/html/index.nginx-debian.html
 
 # Create custom 404 error page
 echo "<!DOCTYPE html>
@@ -36,5 +53,5 @@ printf %s "server {
      }
 }
 " > /etc/nginx/sites-available/default
-
-service nginx restart
+# Restarting nginx
+sudo service nginx restart

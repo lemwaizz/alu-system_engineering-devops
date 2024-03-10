@@ -2,14 +2,9 @@
 # Configures a new ubuntu machine by installing
 # Nginx where it should be listening on port 80
 # Serve a page that would return a Hello World string
-#
-
-
-echo -e "Updating and installing Nginx.\n"
 sudo apt-get update -y -qq && \
          sudo apt-get install nginx -y
 
-echo -e "\nSetting up some minor stuff.\n"
 
 # starting nginx service
 sudo service nginx start
@@ -25,20 +20,10 @@ sudo chmod -R 755 /var/www
 cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
 
 # Creating new index
-echo -e "301 Moved Permanently!" > /var/www/html/index.nginx-debian.html
+echo -e "Holberton School!" > /var/www/html/index.nginx-debian.html
 
 # Setting up /redirect_me to a youtube video
-printf %s "server {
-     listen      80 default_server;
-     listen      [::]:80 default_server;
-     root        /etc/nginx/html;
-     index       index.html index.htm;
-
-     location /redirect_me {
-        return 301 http://youtube.com/;
-    }
-}
-" > /etc/nginx/sites-available/default
+sudo sed -i '24i\       rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;' /etc/nginx/sites-available/default
 
 # Restarting nginx
 sudo service nginx restart

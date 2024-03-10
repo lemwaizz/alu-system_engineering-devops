@@ -4,10 +4,9 @@
 # Serve a page that would return a Hello World string
 #
 
-
 echo -e "Updating and installing Nginx.\n"
 sudo apt-get update -y -qq && \
-         sudo apt-get install nginx -y
+	 sudo apt-get install nginx -y
 
 echo -e "\nSetting up some minor stuff.\n"
 
@@ -27,31 +26,14 @@ cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.b
 # Creating new index
 echo -e "Holberton School!" > /var/www/html/index.nginx-debian.html
 
-# Create custom 404 error page
-echo "<!DOCTYPE html>
-<html>
-<head>
-  <title>404 Not Found</title>
-</head>
-<body>
-  <h1>404 Not Found</h1>
-  <p>Ceci n'est pas une page</p>
-</body>
-</html>" | sudo tee /var/www/html/404.html >/dev/null
+# Setting up /redirect_me to a youtube video
+sudo sed -i '24i\	rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;' /etc/nginx/sites-available/default
 
-printf %s "server {
-     listen      80 default_server;
-     listen      [::]:80 default_server;
-     root        /etc/nginx/html;
-     index       index.html index.htm;
+# Set up a 404 page
+echo "Ceci n'est pas une page" >> /var/www/html/error_404.html
+sudo sed -i '25i\	error_page 404 /error_404.html;' /etc/nginx/sites-available/default
 
-     error_page 404 /404.html;
-
-     location /404 {
-        root /etc/nginx/html;
-        internal;
-     }
-}
-" > /etc/nginx/sites-available/default
 # Restarting nginx
 sudo service nginx restart
+
+echo -e "\nCompleted.\n"

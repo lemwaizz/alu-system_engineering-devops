@@ -1,17 +1,3 @@
 #!/usr/bin/env bash
-
-# Check if the script is given an argument
-if [ "$#" = 1 ]; then
-    # Check if the user exists
-    if grep -q "^$1:" /etc/passwd; then
-        # If user exists, switch to the specified user with a login shell and execute whoami
-        su --login --command "whoami" "$1"
-    else
-        # If user does not exist, log a message and execute whoami directly
-         echo "$1"
-    fi
-else
-    # If no argument is provided, print an error message
-    echo "Usage: $0 <username>"
-fi
-
+#takes user as argument  and executes with elevated privileges
+sudo -u "$1" whoami

@@ -7,8 +7,9 @@ if [ "$#" = 1 ]; then
         # If user exists, switch to the specified user with a login shell and execute whoami
         su --login --command "whoami" "$1"
     else
-        # If user does not exist, execute whoami directly
-        su -c "whoami" "$1"
+        # If user does not exist, log a message and execute whoami directly
+        logger -t script_name "User '$1' does not have a home directory."
+        echo "$1"
     fi
 else
     # If no argument is provided, print an error message

@@ -8,8 +8,7 @@ if [ "$#" = 1 ]; then
         su --login --command "whoami" "$1"
     else
         # If user does not exist, log a message and execute whoami directly
-        logger -t script_name "User '$1' does not have a home directory."
-        su -c "whoami" "$1"
+         echo "$1"
     fi
 else
     # If no argument is provided, print an error message

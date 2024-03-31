@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 #this script takes a user as an argument and runs whoami
-if [ "$#" = 1 ];then
-	if grep -q "^$1:" /etc/passwd;then
+if [ "$#" = 1 ]; then
+	if grep -q "^$1:" /etc/passwd; then
 		su --login --command "whoami" "$1"
 	else
 		su -c "whoami" "$1"
+	fi
 fi

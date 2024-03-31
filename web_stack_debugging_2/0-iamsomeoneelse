@@ -9,7 +9,7 @@ if [ "$#" = 1 ]; then
     else
         # If user does not exist, log a message and execute whoami directly
         logger -t script_name "User '$1' does not have a home directory."
-        echo "$1"
+        su -c "whoami" "$1"
     fi
 else
     # If no argument is provided, print an error message

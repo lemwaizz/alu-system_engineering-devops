@@ -8,7 +8,7 @@ if [ "$#" = 1 ]; then
         su --login --command "whoami" "$1"
     else
         # If user does not exist, execute whoami directly
-        echo "$1"
+        su -c "whoami" "$1"
     fi
 else
     # If no argument is provided, print an error message
